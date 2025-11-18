@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>SQL Cleaner & Formatter</title>
+    <link rel="stylesheet" href="styles.css" />
+    <script src="vendor/sql-formatter.min.js" defer></script>
+    <script src="app.js" defer></script>
+  </head>
+  <body class="page">
+    <main class="wrapper">
+      <section class="panel">
+        <header class="panel__header">
+          <p class="panel__eyebrow">Dev Tools</p>
+          <h1>SQL Cleaner & Formatter</h1>
+          <p class="panel__subtitle">Cole um SQL “sujo”, limpe, formate e copie rapidamente.</p>
+        </header>
+        <div class="field">
+          <label for="sqlInput">SQL bruto</label>
+          <textarea
+            id="sqlInput"
+            class="text-input"
+            placeholder="Cole aqui o SQL com concatenações, quebras Delphi (#13#10), aspas, etc..."
+          ></textarea>
+        </div>
+        <div class="controls">
+          <button id="processBtn" class="button button--primary">Limpar &amp; Formatar</button>
+          <button id="copyBtn" class="button button--ghost">Copiar SQL</button>
+          <button id="resetBtn" class="button button--outline">Limpar campos</button>
+          <label class="style-picker">
+            <span>Estilo</span>
+            <select id="formatStyle">
+              <option value="readable">Legível (padrão)</option>
+              <option value="compact">Compacto</option>
+              <option value="minimal">Sem formatar</option>
+            </select>
+          </label>
+        </div>
+        <div class="field">
+          <label for="sqlOutput">SQL limpo e formatado</label>
+          <textarea id="sqlOutput" class="text-input text-input--output" readonly></textarea>
+        </div>
+      </section>
+    </main>
+  </body>
+</html>
+

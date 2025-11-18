@@ -1,0 +1,232 @@
+:root {
+  --page-bg: #05060f;
+  --panel-bg: #141729;
+  --panel-border: rgba(255, 255, 255, 0.08);
+  --panel-shadow: 0 20px 60px rgba(15, 12, 41, 0.6);
+  --text-primary: #f5f6ff;
+  --text-muted: #9ea7c4;
+  --accent-start: #5d5fef;
+  --accent-end: #b86bff;
+  --input-bg: rgba(9, 11, 23, 0.85);
+  --input-border: rgba(255, 255, 255, 0.08);
+  --input-border-focus: rgba(92, 106, 255, 0.8);
+  --font-body: "Segoe UI", "Inter", system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+  --font-mono: "JetBrains Mono", "Fira Code", "SFMono-Regular", Consolas, monospace;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  font-family: var(--font-body);
+  background: var(--page-bg);
+  color: var(--text-primary);
+}
+
+.page {
+  min-height: 100vh;
+}
+
+.wrapper {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 3rem 1.5rem;
+}
+
+.panel {
+  width: min(960px, 100%);
+  background: var(--panel-bg);
+  border: 1px solid var(--panel-border);
+  border-radius: 24px;
+  padding: 2.5rem;
+  box-shadow: var(--panel-shadow);
+  display: flex;
+  flex-direction: column;
+  gap: 1.75rem;
+}
+
+.panel__header {
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+
+.panel__eyebrow {
+  text-transform: uppercase;
+  letter-spacing: 0.35em;
+  font-size: 0.7rem;
+  color: #7c83ff;
+  margin: 0;
+}
+
+.panel__header h1 {
+  margin: 0;
+  font-size: clamp(2rem, 4vw, 2.8rem);
+  font-weight: 600;
+}
+
+.panel__subtitle {
+  margin: 0;
+  font-size: 0.95rem;
+  color: var(--text-muted);
+}
+
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.field label {
+  font-size: 0.9rem;
+  font-weight: 500;
+  color: var(--text-muted);
+}
+
+.text-input {
+  width: 100%;
+  min-height: 260px;
+  padding: 1rem 1.25rem;
+  border-radius: 18px;
+  border: 1px solid var(--input-border);
+  background: var(--input-bg);
+  color: var(--text-primary);
+  font-family: var(--font-mono);
+  font-size: 0.95rem;
+  resize: vertical;
+  transition: border 0.2s ease, box-shadow 0.2s ease;
+}
+
+.text-input:focus {
+  outline: none;
+  border-color: var(--input-border-focus);
+  box-shadow: 0 0 0 1px var(--input-border-focus);
+}
+
+.text-input--output {
+  min-height: 260px;
+  border-color: rgba(92, 106, 255, 0.35);
+  background: rgba(13, 17, 34, 0.7);
+}
+
+.text-input::placeholder {
+  color: rgba(255, 255, 255, 0.4);
+}
+
+.controls {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.85rem;
+  align-items: center;
+}
+
+.button {
+  border: none;
+  border-radius: 999px;
+  padding: 0.9rem 1.75rem;
+  font-size: 0.9rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: transform 0.15s ease, opacity 0.2s ease;
+}
+
+.button:focus-visible {
+  outline: 2px solid rgba(115, 134, 255, 0.8);
+  outline-offset: 3px;
+}
+
+.button--primary {
+  flex: 1;
+  background: linear-gradient(120deg, var(--accent-start), var(--accent-end));
+  color: #fff;
+  box-shadow: 0 10px 30px rgba(94, 99, 255, 0.35);
+}
+
+.button--ghost {
+  background: rgba(255, 255, 255, 0.06);
+  color: #e4e7ff;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.button--outline {
+  background: transparent;
+  color: #c2c8f5;
+  border: 1px solid rgba(255, 255, 255, 0.18);
+}
+
+.button:hover {
+  opacity: 0.9;
+}
+
+.button:active {
+  transform: scale(0.98);
+}
+
+.style-picker {
+  margin-left: auto;
+  display: flex;
+  align-items: center;
+  gap: 0.85rem;
+  font-weight: 600;
+  letter-spacing: 0.3em;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  font-size: 0.65rem;
+}
+
+.style-picker select {
+  border: 1px solid var(--input-border);
+  border-radius: 14px;
+  background: rgba(7, 9, 20, 0.95);
+  color: var(--text-primary);
+  font-size: 0.92rem;
+  padding: 0.9rem 2.2rem 0.9rem 1.2rem;
+  width: 100%;
+  max-width: 320px;
+  font-family: var(--font-body);
+  min-height: 48px;
+}
+}
+
+.style-picker select:focus {
+  outline: none;
+  border-color: var(--input-border-focus);
+  box-shadow: 0 0 0 1px var(--input-border-focus);
+}
+
+@media (max-width: 768px) {
+  .panel {
+    padding: 1.75rem;
+  }
+
+  .controls {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .button--primary {
+    width: 100%;
+  }
+
+  .style-picker {
+    width: 100%;
+    margin-left: 0;
+    flex-direction: column;
+    align-items: flex-start;
+    letter-spacing: 0.2em;
+  }
+
+  .style-picker select {
+    width: 100%;
+    max-width: none;
+  }
+}
+
