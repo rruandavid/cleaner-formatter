@@ -123,7 +123,7 @@ body {
 }
 
 .tab:hover {
-  color: var(--text-primary);
+  /* Efeito removido conforme solicitado */
 }
 
 .tab[aria-selected="true"] {
@@ -296,13 +296,11 @@ body {
 }
 
 .button:hover {
-  opacity: 0.9;
-  transform: translateY(-1px);
-  box-shadow: 0 12px 35px rgba(94, 99, 255, 0.4);
+  /* Efeito removido conforme solicitado */
 }
 
 .button:active {
-  transform: scale(0.98);
+  /* Efeito removido conforme solicitado */
 }
 
 .style-picker {
@@ -728,5 +726,143 @@ body {
 
   .password-checkboxes {
     grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+/* Gerador de Dados Fake */
+.fake-generator {
+  display: flex;
+  flex-direction: column;
+  gap: 1.75rem;
+}
+
+.fake-generator__selector {
+  display: flex;
+  justify-content: flex-start;
+}
+
+.fake-options {
+  padding: 1.5rem;
+  background: rgba(9, 11, 23, 0.4);
+  border-radius: 18px;
+  border: 1px solid var(--panel-border);
+}
+
+.fake-option-group {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 1rem;
+}
+
+.fake-option {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+}
+
+.fake-option span {
+  font-size: 0.75rem;
+}
+
+.fake-option select,
+.fake-option input {
+  border: 1px solid var(--input-border);
+  border-radius: 12px;
+  background: rgba(7, 9, 20, 0.95);
+  color: var(--text-primary);
+  font-size: 0.9rem;
+  padding: 0.75rem 1rem;
+  font-family: var(--font-body);
+  transition: border 0.2s ease, box-shadow 0.2s ease;
+}
+
+.fake-option select:focus,
+.fake-option input:focus {
+  outline: none;
+  border-color: var(--input-border-focus);
+  box-shadow: 0 0 0 1px var(--input-border-focus);
+}
+
+.fake-actions {
+  display: flex;
+  gap: 1rem;
+}
+
+.fake-actions .button {
+  flex: 1;
+  min-height: 52px;
+}
+
+.fake-results {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 1rem;
+}
+
+.fake-result-item {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  padding: 1rem;
+  background: rgba(9, 11, 23, 0.5);
+  border-radius: 12px;
+  border: 1px solid var(--panel-border);
+}
+
+.fake-result-item__label {
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+}
+
+.fake-result-item__value {
+  font-size: 0.95rem;
+  color: var(--text-primary);
+  font-family: var(--font-mono);
+  word-break: break-all;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem;
+}
+
+.fake-result-item__copy {
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 6px;
+  padding: 0.25rem 0.5rem;
+  font-size: 0.75rem;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  flex-shrink: 0;
+}
+
+.fake-result-item__copy:hover {
+  background: rgba(255, 255, 255, 0.1);
+  border-color: var(--input-border-focus);
+}
+
+@media (max-width: 768px) {
+  .fake-generator__selector {
+    justify-content: center;
+  }
+
+  .fake-option-group {
+    grid-template-columns: 1fr;
+  }
+
+  .fake-results {
+    grid-template-columns: 1fr;
+  }
+
+  .fake-actions {
+    flex-direction: column;
   }
 }

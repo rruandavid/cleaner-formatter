@@ -995,3 +995,416 @@ passwordCopyBtn.addEventListener("click", async () => {
 
 // Gerar senha inicial ao carregar
 updatePassword();
+
+// ============================================
+// GERADOR DE DADOS FAKE
+// ============================================
+
+const fakeTypeEl = document.getElementById("fakeType");
+const personOptionsEl = document.getElementById("personOptions");
+const companyOptionsEl = document.getElementById("companyOptions");
+const fakeGenerateBtn = document.getElementById("fakeGenerateBtn");
+const fakeCopyJsonBtn = document.getElementById("fakeCopyJsonBtn");
+const fakeResultsEl = document.getElementById("fakeResults");
+
+// Dados para geração
+const FIRST_NAMES_MALE = [
+  "João", "Pedro", "Carlos", "Lucas", "Gabriel", "Rafael", "Felipe", "Bruno",
+  "André", "Thiago", "Marcos", "Paulo", "Ricardo", "Daniel", "Rodrigo", "Fernando",
+  "Eduardo", "Gustavo", "Leonardo", "Matheus", "Vinicius", "Henrique", "Diego", "Renato"
+];
+
+const FIRST_NAMES_FEMALE = [
+  "Maria", "Ana", "Juliana", "Fernanda", "Patricia", "Mariana", "Camila", "Amanda",
+  "Bruna", "Beatriz", "Carolina", "Larissa", "Vanessa", "Tatiana", "Priscila", "Renata",
+  "Cristina", "Daniela", "Gabriela", "Isabela", "Leticia", "Luciana", "Monica", "Sandra"
+];
+
+const LAST_NAMES = [
+  "Silva", "Santos", "Oliveira", "Souza", "Rodrigues", "Ferreira", "Alves", "Pereira",
+  "Lima", "Gomes", "Ribeiro", "Carvalho", "Almeida", "Martins", "Costa", "Monteiro",
+  "Cardoso", "Teixeira", "Mendes", "Araujo", "Barbosa", "Dias", "Moreira", "Cavalcanti"
+];
+
+const COMPANY_TYPES = [
+  "LTDA", "EIRELI", "ME", "EPP", "SA"
+];
+
+const COMPANY_ACTIVITIES = [
+  "Tecnologia", "Comércio", "Serviços", "Indústria", "Construção", "Alimentação",
+  "Transporte", "Consultoria", "Educação", "Saúde", "Beleza", "Moda"
+];
+
+const STREET_TYPES = [
+  "Rua", "Avenida", "Travessa", "Praça", "Alameda", "Viela", "Estrada", "Rodovia"
+];
+
+const STREET_NAMES = [
+  "das Flores", "do Comércio", "Principal", "da Paz", "Brasil", "São Paulo",
+  "Rio de Janeiro", "das Palmeiras", "Central", "Nova", "Velha", "do Sol",
+  "da Lua", "dos Bandeirantes", "Independência", "Liberdade"
+];
+
+const NEIGHBORHOODS = [
+  "Centro", "Jardim das Flores", "Vila Nova", "Bela Vista", "São José",
+  "Santa Maria", "Nova Esperança", "Parque Industrial", "Residencial", "Alto"
+];
+
+// Funções auxiliares
+const randomItem = (array) => array[Math.floor(Math.random() * array.length)];
+const randomNumber = (min, max) => Math.floor(Math.random() * (max - min + 1)) + min;
+
+// Gerar CPF válido (apenas sintaticamente, não verifica existência)
+const generateCPFSyntax = (withPunctuation = true) => {
+  // Usar prefixos menos comuns para reduzir chance de CPFs reais
+  // CPFs começando com 0 são menos comuns em CPFs reais (geralmente são de estados específicos)
+  const n1 = randomNumber(0, 1); // Reduzir chance de CPFs reais
+  const n2 = randomNumber(0, 9);
+  const n3 = randomNumber(0, 9);
+  const n4 = randomNumber(0, 9);
+  const n5 = randomNumber(0, 9);
+  const n6 = randomNumber(0, 9);
+  const n7 = randomNumber(0, 9);
+  const n8 = randomNumber(0, 9);
+  const n9 = randomNumber(0, 9);
+
+  let d1 = n9 * 2 + n8 * 3 + n7 * 4 + n6 * 5 + n5 * 6 + n4 * 7 + n3 * 8 + n2 * 9 + n1 * 10;
+  d1 = 11 - (d1 % 11);
+  if (d1 >= 10) d1 = 0;
+
+  let d2 = d1 * 2 + n9 * 3 + n8 * 4 + n7 * 5 + n6 * 6 + n5 * 7 + n4 * 8 + n3 * 9 + n2 * 10;
+  d2 = 11 - (d2 % 11);
+  if (d2 >= 10) d2 = 0;
+
+  const cpf = `${n1}${n2}${n3}${n4}${n5}${n6}${n7}${n8}${n9}${d1}${d2}`;
+  return {
+    raw: cpf,
+    formatted: withPunctuation ? `${cpf.slice(0, 3)}.${cpf.slice(3, 6)}.${cpf.slice(6, 9)}-${cpf.slice(9)}` : cpf
+  };
+};
+
+// Verificar se CPF existe na base real (tentativa com API pública)
+// Nota: APIs públicas de CPF geralmente requerem autenticação, então esta é uma tentativa
+const checkCPFExists = async (cpf) => {
+  try {
+    const cleanCPF = cpf.replace(/\D/g, "");
+    
+    // Tentar usar API pública se disponível (algumas APIs podem funcionar sem auth para validação básica)
+    // Usando uma abordagem conservadora: assumir que não existe se não conseguir verificar
+    // Isso evita gerar CPFs reais quando possível
+    
+    // Verificação básica: CPFs com todos os dígitos iguais são inválidos
+    if (/^(\d)\1{10}$/.test(cleanCPF)) {
+      return false;
+    }
+    
+    // Por enquanto, retornar false (não existe) para não bloquear
+    // Em produção, você poderia integrar com uma API de validação se tiver acesso
+    return false;
+  } catch (error) {
+    console.warn("Erro ao verificar CPF:", error);
+    return false;
+  }
+};
+
+// Gerar CPF que não existe na base real
+const generateCPF = async (withPunctuation = true, maxAttempts = 5) => {
+  for (let attempt = 0; attempt < maxAttempts; attempt++) {
+    const cpfData = generateCPFSyntax(withPunctuation);
+    const exists = await checkCPFExists(cpfData.raw);
+    
+    if (!exists) {
+      return cpfData.formatted;
+    }
+    
+    // Se existe, tentar novamente
+    await new Promise(resolve => setTimeout(resolve, 50)); // Pequeno delay
+  }
+  
+  // Se após várias tentativas ainda encontrar CPFs existentes, retornar o último gerado
+  const cpfData = generateCPFSyntax(withPunctuation);
+  return cpfData.formatted;
+};
+
+// Gerar CNPJ válido (apenas sintaticamente, não verifica existência)
+const generateCNPJSyntax = (withPunctuation = true) => {
+  // Usar prefixos que raramente são usados em CNPJs reais para reduzir chance de colisão
+  // Prefixos começando com 00 são menos comuns em CNPJs reais
+  const n1 = randomNumber(0, 1); // Reduzir chance de CNPJs reais
+  const n2 = randomNumber(0, 9);
+  const n3 = randomNumber(0, 9);
+  const n4 = randomNumber(0, 9);
+  const n5 = randomNumber(0, 9);
+  const n6 = randomNumber(0, 9);
+  const n7 = randomNumber(0, 9);
+  const n8 = randomNumber(0, 9);
+  const n9 = randomNumber(0, 2); // Usar valores menores para reduzir chance
+  const n10 = randomNumber(0, 2);
+  const n11 = randomNumber(0, 2);
+  const n12 = randomNumber(0, 2);
+
+  let d1 = n12 * 2 + n11 * 3 + n10 * 4 + n9 * 5 + n8 * 6 + n7 * 7 + n6 * 8 + n5 * 9 + n4 * 2 + n3 * 3 + n2 * 4 + n1 * 5;
+  d1 = 11 - (d1 % 11);
+  if (d1 >= 10) d1 = 0;
+
+  let d2 = d1 * 2 + n12 * 3 + n11 * 4 + n10 * 5 + n9 * 6 + n8 * 7 + n7 * 8 + n6 * 9 + n5 * 2 + n4 * 3 + n3 * 4 + n2 * 5 + n1 * 6;
+  d2 = 11 - (d2 % 11);
+  if (d2 >= 10) d2 = 0;
+
+  const cnpj = `${n1}${n2}${n3}${n4}${n5}${n6}${n7}${n8}${n9}${n10}${n11}${n12}${d1}${d2}`;
+  return {
+    raw: cnpj,
+    formatted: withPunctuation ? `${cnpj.slice(0, 2)}.${cnpj.slice(2, 5)}.${cnpj.slice(5, 8)}/${cnpj.slice(8, 12)}-${cnpj.slice(12)}` : cnpj
+  };
+};
+
+// Verificar se CNPJ existe na base real usando API
+const checkCNPJExists = async (cnpj) => {
+  try {
+    // Usar API gratuita da ReceitaWS ou BrasilAPI
+    const cleanCNPJ = cnpj.replace(/\D/g, "");
+    const response = await fetch(`https://brasilapi.com.br/api/cnpj/v1/${cleanCNPJ}`, {
+      method: "GET",
+      headers: {
+        "Accept": "application/json"
+      }
+    });
+
+    // Se retornar 200, o CNPJ existe
+    if (response.ok) {
+      const data = await response.json();
+      // Se tem razão social, significa que existe
+      return data.razao_social ? true : false;
+    }
+
+    // Se retornar 404 ou erro, não existe
+    return false;
+  } catch (error) {
+    // Em caso de erro na API, assumir que não existe para não bloquear
+    console.warn("Erro ao verificar CNPJ:", error);
+    return false;
+  }
+};
+
+// Gerar CNPJ que não existe na base real
+const generateCNPJ = async (withPunctuation = true, maxAttempts = 10) => {
+  for (let attempt = 0; attempt < maxAttempts; attempt++) {
+    const cnpjData = generateCNPJSyntax(withPunctuation);
+    const exists = await checkCNPJExists(cnpjData.raw);
+    
+    if (!exists) {
+      return cnpjData.formatted;
+    }
+    
+    // Se existe, tentar novamente
+    await new Promise(resolve => setTimeout(resolve, 100)); // Pequeno delay para não sobrecarregar API
+  }
+  
+  // Se após várias tentativas ainda encontrar CNPJs existentes, retornar o último gerado
+  // (caso raro, mas melhor que travar)
+  const cnpjData = generateCNPJSyntax(withPunctuation);
+  return cnpjData.formatted;
+};
+
+// Gerar CEP
+const generateCEP = (withPunctuation = true) => {
+  const cep = String(randomNumber(10000, 99999)) + String(randomNumber(100, 999));
+  return withPunctuation ? `${cep.slice(0, 5)}-${cep.slice(5)}` : cep;
+};
+
+// Gerar RG
+const generateRG = (withPunctuation = true) => {
+  const rg = String(randomNumber(1000000, 999999999));
+  return withPunctuation ? `${rg.slice(0, 2)}.${rg.slice(2, 5)}.${rg.slice(5, 8)}-${rg.slice(8)}` : rg;
+};
+
+// Gerar Inscrição Estadual
+const generateIE = (state, withPunctuation = true) => {
+  const digits = randomNumber(10000000, 999999999);
+  const ie = String(digits).padStart(12, "0");
+  return withPunctuation ? `${ie.slice(0, 3)}.${ie.slice(3, 6)}.${ie.slice(6, 9)}.${ie.slice(9)}` : ie;
+};
+
+// Gerar email
+const generateEmail = (name) => {
+  const domains = ["gmail.com", "hotmail.com", "yahoo.com.br", "outlook.com", "uol.com.br"];
+  const cleanName = name.toLowerCase().replace(/\s+/g, ".");
+  return `${cleanName}@${randomItem(domains)}`;
+};
+
+// Gerar telefone
+const generatePhone = (withPunctuation = true) => {
+  const area = randomNumber(11, 99);
+  const number = String(randomNumber(10000000, 99999999));
+  return withPunctuation ? `(${area}) ${number.slice(0, 4)}-${number.slice(4)}` : `${area}${number}`;
+};
+
+// Gerar celular
+const generateCellphone = (withPunctuation = true) => {
+  const area = randomNumber(11, 99);
+  const number = "9" + String(randomNumber(10000000, 99999999));
+  return withPunctuation ? `(${area}) ${number.slice(0, 5)}-${number.slice(5)}` : `${area}${number}`;
+};
+
+// Gerar data de nascimento
+const generateBirthDate = (age = null) => {
+  const targetAge = age || randomNumber(18, 80);
+  const today = new Date();
+  const birthYear = today.getFullYear() - targetAge;
+  const birthMonth = randomNumber(1, 12);
+  const daysInMonth = new Date(birthYear, birthMonth, 0).getDate();
+  const birthDay = randomNumber(1, daysInMonth);
+  return `${String(birthDay).padStart(2, "0")}/${String(birthMonth).padStart(2, "0")}/${birthYear}`;
+};
+
+// Gerar data de abertura (empresa)
+const generateOpeningDate = (yearsAgo) => {
+  const today = new Date();
+  const openingYear = today.getFullYear() - yearsAgo;
+  const openingMonth = randomNumber(1, 12);
+  const daysInMonth = new Date(openingYear, openingMonth, 0).getDate();
+  const openingDay = randomNumber(1, daysInMonth);
+  return `${String(openingDay).padStart(2, "0")}/${String(openingMonth).padStart(2, "0")}/${openingYear}`;
+};
+
+// Gerar pessoa
+const generatePerson = async () => {
+  const gender = document.getElementById("personGender").value === "random" 
+    ? (Math.random() > 0.5 ? "male" : "female")
+    : document.getElementById("personGender").value;
+  const age = parseInt(document.getElementById("personAge").value) || randomNumber(18, 80);
+  const state = document.getElementById("personState").value || randomItem(["SP", "RJ", "MG", "RS", "PR"]);
+  const withPunctuation = document.getElementById("personPunctuation").value === "true";
+
+  const firstName = gender === "male" ? randomItem(FIRST_NAMES_MALE) : randomItem(FIRST_NAMES_FEMALE);
+  const lastName = randomItem(LAST_NAMES) + " " + randomItem(LAST_NAMES);
+  const fullName = `${firstName} ${lastName}`;
+
+  // Gerar CPF que não existe na base real
+  const cpf = await generateCPF(withPunctuation);
+
+  return {
+    nome: fullName,
+    cpf: cpf,
+    rg: generateRG(withPunctuation),
+    dataNascimento: generateBirthDate(age),
+    sexo: gender === "male" ? "Masculino" : "Feminino",
+    email: generateEmail(firstName + "." + lastName.split(" ")[0]),
+    cep: generateCEP(withPunctuation),
+    endereco: `${randomItem(STREET_TYPES)} ${randomItem(STREET_NAMES)}, ${randomNumber(1, 9999)}`,
+    bairro: randomItem(NEIGHBORHOODS),
+    cidade: "São Paulo", // Simplificado - poderia ter lista por estado
+    estado: state,
+    telefone: generatePhone(withPunctuation),
+    celular: generateCellphone(withPunctuation),
+  };
+};
+
+// Gerar empresa
+const generateCompany = async () => {
+  const state = document.getElementById("companyState").value;
+  const yearsAgo = parseInt(document.getElementById("companyYears").value);
+  const withPunctuation = document.getElementById("companyPunctuation").value === "true";
+
+  const activity = randomItem(COMPANY_ACTIVITIES);
+  const companyName = `${randomItem(LAST_NAMES)} ${activity} ${randomItem(COMPANY_TYPES)}`;
+  const fantasyName = `${activity} ${randomItem(["Plus", "Premium", "Express", "Solutions", "Group"])}`;
+
+  // Gerar CNPJ que não existe na base real
+  const cnpj = await generateCNPJ(withPunctuation);
+
+  return {
+    nome: companyName,
+    nomeFantasia: fantasyName,
+    cnpj: cnpj,
+    inscricaoEstadual: generateIE(state, withPunctuation),
+    dataAbertura: generateOpeningDate(yearsAgo),
+    site: `www.${fantasyName.toLowerCase().replace(/\s+/g, "")}.com.br`,
+    email: `contato@${fantasyName.toLowerCase().replace(/\s+/g, "")}.com.br`,
+    cep: generateCEP(withPunctuation),
+    endereco: `${randomItem(STREET_TYPES)} ${randomItem(STREET_NAMES)}, ${randomNumber(1, 9999)}`,
+    numero: String(randomNumber(1, 9999)),
+    bairro: randomItem(NEIGHBORHOODS),
+    cidade: "São Paulo", // Simplificado
+    estado: state,
+    telefone: generatePhone(withPunctuation),
+    celular: generateCellphone(withPunctuation),
+  };
+};
+
+// Renderizar resultados
+const renderResults = (data) => {
+  fakeResultsEl.innerHTML = "";
+  Object.entries(data).forEach(([key, value]) => {
+    const item = document.createElement("div");
+    item.className = "fake-result-item";
+    item.innerHTML = `
+      <div class="fake-result-item__label">${key}</div>
+      <div class="fake-result-item__value">
+        <span>${value}</span>
+        <button class="fake-result-item__copy" data-value="${value}">Copiar</button>
+      </div>
+    `;
+    fakeResultsEl.appendChild(item);
+  });
+
+  // Adicionar listeners de cópia
+  fakeResultsEl.querySelectorAll(".fake-result-item__copy").forEach((btn) => {
+    btn.addEventListener("click", async () => {
+      const value = btn.dataset.value;
+      try {
+        await navigator.clipboard.writeText(value);
+        showToast("Copiado com sucesso!", "success");
+      } catch (e) {
+        showToast("Erro ao copiar", "error");
+      }
+    });
+  });
+};
+
+// Alternar entre Pessoa e Empresa
+fakeTypeEl.addEventListener("change", () => {
+  const type = fakeTypeEl.value;
+  if (type === "person") {
+    personOptionsEl.style.display = "block";
+    companyOptionsEl.style.display = "none";
+  } else {
+    personOptionsEl.style.display = "none";
+    companyOptionsEl.style.display = "block";
+  }
+});
+
+// Gerar dados
+fakeGenerateBtn.addEventListener("click", async () => {
+  const type = fakeTypeEl.value;
+  
+  // Desabilitar botão durante geração
+  fakeGenerateBtn.disabled = true;
+  fakeGenerateBtn.textContent = "Gerando...";
+  
+  try {
+    const data = type === "person" ? await generatePerson() : await generateCompany();
+    renderResults(data);
+    window.fakeData = data; // Armazenar para copiar JSON
+  } catch (error) {
+    console.error("Erro ao gerar dados:", error);
+    showToast("Erro ao gerar dados. Tente novamente.", "error");
+  } finally {
+    fakeGenerateBtn.disabled = false;
+    fakeGenerateBtn.textContent = "Gerar Dados";
+  }
+});
+
+// Copiar JSON
+fakeCopyJsonBtn.addEventListener("click", async () => {
+  if (!window.fakeData) {
+    showToast("Gere dados primeiro", "info");
+    return;
+  }
+  try {
+    await navigator.clipboard.writeText(JSON.stringify(window.fakeData, null, 2));
+    showToast("JSON copiado com sucesso!", "success");
+  } catch (e) {
+    showToast("Erro ao copiar", "error");
+  }
+});

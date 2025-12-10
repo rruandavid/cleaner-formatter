@@ -24,6 +24,7 @@
           <button class="tab" data-tab="xml" aria-selected="false">XML</button>
           <button class="tab" data-tab="json" aria-selected="false">JSON</button>
           <button class="tab" data-tab="password" aria-selected="false">Gerador de Senhas</button>
+          <button class="tab" data-tab="fake" aria-selected="false">Dados Fake</button>
         </div>
 
         <!-- Conteúdo SQL -->
@@ -37,8 +38,8 @@
           </div>
           <div class="controls">
             <div class="controls__actions">
-              <button id="sqlCopyBtn" class="button button--ghost">Copiar SQL</button>
-              <button id="sqlResetBtn" class="button button--outline">Limpar campos</button>
+              <button id="sqlCopyBtn" class="button button--primary">Copiar SQL</button>
+              <button id="sqlResetBtn" class="button button--ghost">Limpar campos</button>
             </div>
             <div class="controls__selectors">
               <label class="style-picker">
@@ -79,8 +80,8 @@
           </div>
           <div class="controls">
             <div class="controls__actions">
-              <button id="xmlCopyBtn" class="button button--ghost">Copiar XML</button>
-              <button id="xmlResetBtn" class="button button--outline">Limpar campos</button>
+              <button id="xmlCopyBtn" class="button button--primary">Copiar XML</button>
+              <button id="xmlResetBtn" class="button button--ghost">Limpar campos</button>
             </div>
             <div class="controls__selectors">
               <label class="style-picker">
@@ -112,8 +113,8 @@
           </div>
           <div class="controls">
             <div class="controls__actions">
-              <button id="jsonCopyBtn" class="button button--ghost">Copiar JSON</button>
-              <button id="jsonResetBtn" class="button button--outline">Limpar campos</button>
+              <button id="jsonCopyBtn" class="button button--primary">Copiar JSON</button>
+              <button id="jsonResetBtn" class="button button--ghost">Limpar campos</button>
             </div>
             <div class="controls__selectors">
               <label class="style-picker">
@@ -182,6 +183,146 @@
                 </div>
               </div>
             </div>
+          </div>
+        </div>
+
+        <!-- Conteúdo Dados Fake -->
+        <div class="tab-content" id="fake-content" data-active="false">
+          <div class="fake-generator">
+            <div class="fake-generator__selector">
+              <label class="style-picker">
+                <span>Tipo</span>
+                <select id="fakeType">
+                  <option value="person">Gerador de Pessoas</option>
+                  <option value="company">Gerador de Empresas</option>
+                </select>
+              </label>
+            </div>
+
+            <!-- Opções para Pessoa -->
+            <div class="fake-options" id="personOptions">
+              <div class="fake-option-group">
+                <label class="fake-option">
+                  <span>Sexo:</span>
+                  <select id="personGender">
+                    <option value="random">Aleatório</option>
+                    <option value="male">Masculino</option>
+                    <option value="female">Feminino</option>
+                  </select>
+                </label>
+                <label class="fake-option">
+                  <span>Idade:</span>
+                  <input type="number" id="personAge" min="18" max="80" placeholder="Aleatório" />
+                </label>
+                <label class="fake-option">
+                  <span>Estado:</span>
+                  <select id="personState">
+                    <option value="">Todos</option>
+                    <option value="AC">AC</option>
+                    <option value="AL">AL</option>
+                    <option value="AP">AP</option>
+                    <option value="AM">AM</option>
+                    <option value="BA">BA</option>
+                    <option value="CE">CE</option>
+                    <option value="DF">DF</option>
+                    <option value="ES">ES</option>
+                    <option value="GO">GO</option>
+                    <option value="MA">MA</option>
+                    <option value="MT">MT</option>
+                    <option value="MS">MS</option>
+                    <option value="MG">MG</option>
+                    <option value="PA">PA</option>
+                    <option value="PB">PB</option>
+                    <option value="PR">PR</option>
+                    <option value="PE">PE</option>
+                    <option value="PI">PI</option>
+                    <option value="RJ">RJ</option>
+                    <option value="RN">RN</option>
+                    <option value="RS">RS</option>
+                    <option value="RO">RO</option>
+                    <option value="RR">RR</option>
+                    <option value="SC">SC</option>
+                    <option value="SP">SP</option>
+                    <option value="SE">SE</option>
+                    <option value="TO">TO</option>
+                  </select>
+                </label>
+                <label class="fake-option">
+                  <span>Com pontuação:</span>
+                  <select id="personPunctuation">
+                    <option value="true">Sim</option>
+                    <option value="false">Não</option>
+                  </select>
+                </label>
+              </div>
+            </div>
+
+            <!-- Opções para Empresa -->
+            <div class="fake-options" id="companyOptions" style="display: none;">
+              <div class="fake-option-group">
+                <label class="fake-option">
+                  <span>Estado:</span>
+                  <select id="companyState">
+                    <option value="AC">AC</option>
+                    <option value="AL">AL</option>
+                    <option value="AP">AP</option>
+                    <option value="AM">AM</option>
+                    <option value="BA">BA</option>
+                    <option value="CE">CE</option>
+                    <option value="DF">DF</option>
+                    <option value="ES">ES</option>
+                    <option value="GO">GO</option>
+                    <option value="MA">MA</option>
+                    <option value="MT">MT</option>
+                    <option value="MS">MS</option>
+                    <option value="MG">MG</option>
+                    <option value="PA">PA</option>
+                    <option value="PB">PB</option>
+                    <option value="PR">PR</option>
+                    <option value="PE">PE</option>
+                    <option value="PI">PI</option>
+                    <option value="RJ">RJ</option>
+                    <option value="RN">RN</option>
+                    <option value="RS">RS</option>
+                    <option value="RO">RO</option>
+                    <option value="RR">RR</option>
+                    <option value="SC">SC</option>
+                    <option value="SP">SP</option>
+                    <option value="SE">SE</option>
+                    <option value="TO">TO</option>
+                  </select>
+                </label>
+                <label class="fake-option">
+                  <span>Anos de empresa:</span>
+                  <select id="companyYears">
+                    <option value="1">1</option>
+                    <option value="2">2</option>
+                    <option value="3">3</option>
+                    <option value="4">4</option>
+                    <option value="5">5</option>
+                    <option value="10">10</option>
+                    <option value="15">15</option>
+                    <option value="20">20</option>
+                    <option value="25">25</option>
+                    <option value="30">30</option>
+                  </select>
+                </label>
+                <label class="fake-option">
+                  <span>Com pontuação:</span>
+                  <select id="companyPunctuation">
+                    <option value="true">Sim</option>
+                    <option value="false">Não</option>
+                  </select>
+                </label>
+              </div>
+            </div>
+
+            <div class="fake-actions">
+              <button id="fakeGenerateBtn" class="button button--primary">Gerar Dados</button>
+              <button id="fakeCopyJsonBtn" class="button button--ghost">Copiar JSON</button>
+            </div>
+
+            <div class="fake-results" id="fakeResults"></div>
           </div>
         </div>
       </section>
