@@ -1,6 +1,53 @@
-Uma ferramenta web simples e eficiente para limpar, formatar e padronizar seu código SQL. Transforme consultas desorganizadas e de difícil leitura em código elegante e bem estruturado diretamente no seu navegador.
+# 🛠️ DEV TOOLS
 
-Este projeto é uma aplicação 100% front-end que utiliza HTML, CSS e JavaScript para processar o código SQL no lado do cliente.
+Uma suíte web de ferramentas para desenvolvedores. Formate código SQL, XML e JSON, gere senhas seguras e crie dados fictícios para testes - tudo diretamente no seu navegador.
 
-Destaque:
-Este projeto foi concebido e implementado integralmente utilizando o Cursor (um editor de código assistido por IA). Essa abordagem demonstrou a capacidade do Cursor em auxiliar na criação de ferramentas funcionais rapidamente, desde a estrutura inicial até a lógica de formatação de strings em JavaScript.
+**[🚀 Acesse a ferramenta](https://rruandavid.github.io/dev-tools/)**
+
+---
+
+## 🤖 100% Desenvolvido por IA
+
+**Este projeto foi INTEIRAMENTE criado pelo Cursor AI.**
+
+Nenhuma linha de código foi escrita ou modificada manualmente. Todo o HTML, CSS e JavaScript foi gerado através de prompts para a IA. Este é um experimento demonstrando o potencial das ferramentas de IA no desenvolvimento de software
+
+---
+
+## 📋 Ferramentas Disponíveis
+
+### Formatadores de Código
+- **SQL Formatter** - Formatação com opções de estilo e case
+- **XML Formatter** - Indentação configurável
+- **JSON Formatter** - Formatação ou minificação
+
+### Geradores
+- **Gerador de Senhas** - Senhas seguras personalizáveis
+- **Gerador de Dados Fake** - Dados fictícios brasileiros (pessoas e empresas) com CPF, CNPJ, endereços e mais
+
+---
+
+## ✨ Características
+
+- 🚀 **100% Front-end** - Tudo processado no navegador
+- 🔒 **Privado e Seguro** - Seus dados não saem do seu navegador
+- 📱 **Responsivo** - Funciona em qualquer dispositivo
+- 💾 **Sem instalação** - Use diretamente pelo navegador
+
+---
+
+## 🛠️ Tecnologias
+
+HTML5 • CSS3 • JavaScript (Vanilla)
+
+**Código 100% gerado por Cursor AI**
+
+---
+
+## 📝 Licença
+
+MIT License - Use livremente
+
+---
+
+**💻 Powered by Cursor AI**
