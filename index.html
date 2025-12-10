@@ -6,8 +6,10 @@
     <meta name="description" content="Ferramentas essenciais para desenvolvedores: formatadores de SQL, XML e JSON, gerador de senhas seguras e gerador de dados fake (pessoas físicas e jurídicas) com CPF, CNPJ e endereços reais." />
     <title>DEV TOOLS - Formatadores e Geradores para Desenvolvedores</title>
     <link rel="icon" type="image/svg+xml" href="favicon.svg" />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
     <link rel="stylesheet" href="styles.css" />
     <script src="vendor/sql-formatter.min.js" defer></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js" integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI" crossorigin="anonymous" defer></script>
     <script src="app.js" defer></script>
   </head>
   <body class="page">
@@ -39,8 +41,8 @@
           </div>
           <div class="controls">
             <div class="controls__actions">
-              <button id="sqlCopyBtn" class="button button--primary">Copiar SQL</button>
-              <button id="sqlResetBtn" class="button button--ghost">Limpar campos</button>
+              <button id="sqlCopyBtn" class="btn btn-primary">Copiar SQL</button>
+              <button id="sqlResetBtn" class="btn btn-outline-secondary">Limpar campos</button>
             </div>
             <div class="controls__selectors">
               <label class="style-picker">
@@ -81,8 +83,8 @@
           </div>
           <div class="controls">
             <div class="controls__actions">
-              <button id="xmlCopyBtn" class="button button--primary">Copiar XML</button>
-              <button id="xmlResetBtn" class="button button--ghost">Limpar campos</button>
+              <button id="xmlCopyBtn" class="btn btn-primary">Copiar XML</button>
+              <button id="xmlResetBtn" class="btn btn-outline-secondary">Limpar campos</button>
             </div>
             <div class="controls__selectors">
               <label class="style-picker">
@@ -114,8 +116,8 @@
           </div>
           <div class="controls">
             <div class="controls__actions">
-              <button id="jsonCopyBtn" class="button button--primary">Copiar JSON</button>
-              <button id="jsonResetBtn" class="button button--ghost">Limpar campos</button>
+              <button id="jsonCopyBtn" class="btn btn-primary">Copiar JSON</button>
+              <button id="jsonResetBtn" class="btn btn-outline-secondary">Limpar campos</button>
             </div>
             <div class="controls__selectors">
               <label class="style-picker">
@@ -148,8 +150,8 @@
                 </div>
               </div>
               <div class="password-actions">
-                <button id="passwordCopyBtn" class="button button--primary">Copiar</button>
-                <button id="passwordGenerateBtn" class="button button--ghost">Gerar Nova</button>
+                <button id="passwordCopyBtn" class="btn btn-primary">Copiar</button>
+                <button id="passwordGenerateBtn" class="btn btn-outline-secondary">Gerar Nova</button>
               </div>
             </div>
 
@@ -319,8 +321,8 @@
             </div>
 
             <div class="fake-actions">
-              <button id="fakeGenerateBtn" class="button button--primary">Gerar Dados</button>
-              <button id="fakeCopyJsonBtn" class="button button--ghost">Copiar JSON</button>
+              <button id="fakeGenerateBtn" class="btn btn-primary">Gerar Dados</button>
+              <button id="fakeCopyJsonBtn" class="btn btn-outline-secondary">Copiar JSON</button>
             </div>
 
             <div class="fake-results" id="fakeResults"></div>

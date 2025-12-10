@@ -1622,7 +1622,7 @@ const renderResults = (data) => {
       <div class="fake-result-item__label">${key}</div>
       <div class="fake-result-item__value">
         <span>${value}</span>
-        <button class="fake-result-item__copy" data-value="${value}">Copiar</button>
+        <button class="btn btn-sm btn-outline-secondary fake-result-item__copy" data-value="${value}">Copiar</button>
       </div>
     `;
     fakeResultsEl.appendChild(item);
