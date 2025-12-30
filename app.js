@@ -1,4 +1,44 @@
 // ============================================
+// SISTEMA DE TEMA (Claro/Escuro)
+// ============================================
+
+const themeToggle = document.getElementById("themeToggle");
+const themeToggleText = themeToggle?.querySelector(".theme-toggle__text");
+const html = document.documentElement;
+
+// Carregar tema salvo ou usar padrão (escuro)
+const loadTheme = () => {
+  const savedTheme = localStorage.getItem("theme") || "dark";
+  html.setAttribute("data-theme", savedTheme);
+  updateThemeText(savedTheme);
+};
+
+// Atualizar texto do botão
+const updateThemeText = (theme) => {
+  if (themeToggleText) {
+    themeToggleText.textContent = theme === "light" ? "Tema Claro" : "Tema Escuro";
+  }
+};
+
+// Alternar tema
+const toggleTheme = () => {
+  const currentTheme = html.getAttribute("data-theme") || "dark";
+  const newTheme = currentTheme === "dark" ? "light" : "dark";
+  
+  html.setAttribute("data-theme", newTheme);
+  localStorage.setItem("theme", newTheme);
+  updateThemeText(newTheme);
+};
+
+// Event listener para o botão de tema
+if (themeToggle) {
+  themeToggle.addEventListener("click", toggleTheme);
+}
+
+// Carregar tema ao iniciar
+loadTheme();
+
+// ============================================
 // SISTEMA DE SIDEBAR (Menu Lateral)
 // ============================================
 
@@ -97,8 +137,15 @@ tabs.forEach((tab) => {
 });
 
 // Restaurar aba ativa ao carregar
-const savedTab = localStorage.getItem("activeTab") || "sql";
-switchTab(savedTab);
+// Se não houver aba salva, usar SQL como padrão
+const savedTab = localStorage.getItem("activeTab");
+if (savedTab) {
+  switchTab(savedTab);
+} else {
+  // Primeira vez - garantir que SQL seja selecionado
+  switchTab("sql");
+  localStorage.setItem("activeTab", "sql");
+}
 
 // Atualizar contador de ferramentas dinamicamente
 const updateToolsCount = () => {
