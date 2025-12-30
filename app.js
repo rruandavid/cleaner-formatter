@@ -127,6 +127,23 @@ const switchTab = (targetTab) => {
 
   // Salvar aba ativa no localStorage
   localStorage.setItem("activeTab", targetTab);
+  
+  // Atualizar URL com âncora amigável para SEO
+  const anchorMap = {
+    sql: 'formatador-sql',
+    xml: 'formatador-xml',
+    json: 'formatador-json',
+    password: 'gerador-senhas',
+    fake: 'dados-fake-brasil',
+    qrcode: 'gerador-qrcode'
+  };
+  
+  const anchor = anchorMap[targetTab] || targetTab;
+  if (history.pushState) {
+    history.pushState(null, null, `#${anchor}`);
+  } else {
+    window.location.hash = anchor;
+  }
 };
 
 tabs.forEach((tab) => {
@@ -136,16 +153,39 @@ tabs.forEach((tab) => {
   });
 });
 
-// Restaurar aba ativa ao carregar
-// Se não houver aba salva, usar SQL como padrão
-const savedTab = localStorage.getItem("activeTab");
-if (savedTab) {
-  switchTab(savedTab);
-} else {
-  // Primeira vez - garantir que SQL seja selecionado
-  switchTab("sql");
-  localStorage.setItem("activeTab", "sql");
-}
+// Mapear âncoras amigáveis para tabs
+const anchorToTabMap = {
+  'formatador-sql': 'sql',
+  'formatador-xml': 'xml',
+  'formatador-json': 'json',
+  'gerador-senhas': 'password',
+  'dados-fake-brasil': 'fake',
+  'gerador-qrcode': 'qrcode'
+};
+
+// Restaurar aba ativa ao carregar (prioridade: URL hash > localStorage > padrão SQL)
+const getInitialTab = () => {
+  // Verificar se há âncora na URL
+  if (window.location.hash) {
+    const anchor = window.location.hash.substring(1); // Remove o #
+    const tab = anchorToTabMap[anchor];
+    if (tab) {
+      return tab;
+    }
+  }
+  
+  // Verificar localStorage
+  const savedTab = localStorage.getItem("activeTab");
+  if (savedTab) {
+    return savedTab;
+  }
+  
+  // Padrão: SQL
+  return "sql";
+};
+
+const initialTab = getInitialTab();
+switchTab(initialTab);
 
 // Atualizar contador de ferramentas dinamicamente
 const updateToolsCount = () => {

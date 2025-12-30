@@ -3,9 +3,73 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Ferramentas Essenciais - DEV TOOLS</title>
+    
+    <!-- Primary Meta Tags -->
+    <title>Formatador SQL Online | Formatador JSON | Gerador de Senhas | Dev Tools Grátis</title>
+    <meta name="title" content="Formatador SQL Online | Formatador JSON | Gerador de Senhas | Dev Tools Grátis" />
+    <meta name="description" content="Ferramentas essenciais para desenvolvedores: formatador SQL online, formatador JSON, formatador XML, gerador de senhas seguras, gerador de dados fake Brasil e gerador de QR Code. 100% gratuito e online." />
+    <meta name="keywords" content="formatador sql online, formatador json, formatador xml, gerador senha, dados fake brasil, qr code, dev tools, ferramentas desenvolvedor, formatador código online" />
+    <meta name="author" content="DEV TOOLS" />
+    <meta name="robots" content="index, follow" />
+    <meta name="language" content="Portuguese" />
+    <meta name="revisit-after" content="7 days" />
+    
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://rruandavid.github.io/dev-tools/" />
+    <meta property="og:title" content="Formatador SQL Online | Formatador JSON | Gerador de Senhas | Dev Tools" />
+    <meta property="og:description" content="Ferramentas essenciais para desenvolvedores: formatador SQL, JSON, XML, gerador de senhas, dados fake Brasil e QR Code. 100% gratuito e online." />
+    <meta property="og:image" content="https://rruandavid.github.io/dev-tools/favicon.svg" />
+    <meta property="og:locale" content="pt_BR" />
+    <meta property="og:site_name" content="DEV TOOLS" />
+    
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image" />
+    <meta property="twitter:url" content="https://rruandavid.github.io/dev-tools/" />
+    <meta property="twitter:title" content="Formatador SQL Online | Formatador JSON | Gerador de Senhas" />
+    <meta property="twitter:description" content="Ferramentas essenciais para desenvolvedores: formatador SQL, JSON, XML, gerador de senhas, dados fake Brasil e QR Code. 100% gratuito." />
+    <meta property="twitter:image" content="https://rruandavid.github.io/dev-tools/favicon.svg" />
+    
+    <!-- Canonical URL -->
+    <link rel="canonical" href="https://rruandavid.github.io/dev-tools/" />
+    
+    <!-- Favicon -->
     <link rel="icon" type="image/svg+xml" href="favicon.svg" />
+    
+    <!-- Stylesheet -->
     <link rel="stylesheet" href="styles.css" />
+    
+    <!-- Structured Data (JSON-LD) -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebApplication",
+      "name": "DEV TOOLS - Ferramentas Essenciais para Desenvolvedores",
+      "description": "Formatador SQL online, formatador JSON, formatador XML, gerador de senhas seguras, gerador de dados fake Brasil e gerador de QR Code. Ferramentas gratuitas para desenvolvedores.",
+      "url": "https://rruandavid.github.io/dev-tools/",
+      "applicationCategory": "DeveloperApplication",
+      "operatingSystem": "Web Browser",
+      "offers": {
+        "@type": "Offer",
+        "price": "0",
+        "priceCurrency": "BRL"
+      },
+      "featureList": [
+        "Formatador SQL Online",
+        "Formatador JSON",
+        "Formatador XML",
+        "Gerador de Senhas Seguras",
+        "Gerador de Dados Fake Brasil",
+        "Gerador de QR Code"
+      ],
+      "browserRequirements": "Requires JavaScript. Requires HTML5.",
+      "softwareVersion": "1.0",
+      "inLanguage": "pt-BR",
+      "isAccessibleForFree": true
+    }
+    </script>
+    
+    <!-- Scripts -->
     <script src="vendor/sql-formatter.min.js" defer></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js" defer></script>
     <script src="app.js" defer></script>
@@ -66,10 +130,15 @@
     </button>
 
     <main class="wrapper">
-      <section class="panel">
+      <section class="panel" itemscope itemtype="https://schema.org/SoftwareApplication">
+        <header class="panel__header" style="display: none;">
+          <h1 itemprop="name">DEV TOOLS - Ferramentas Essenciais para Desenvolvedores</h1>
+          <p itemprop="description">Formatador SQL online, formatador JSON, formatador XML, gerador de senhas, dados fake Brasil e QR Code</p>
+        </header>
 
         <!-- Conteúdo SQL -->
-        <div class="tab-content" id="sql-content" data-active="true">
+        <article class="tab-content" id="sql-content" data-active="true">
+          <h2 class="sr-only" id="formatador-sql">Formatador de SQL Online</h2>
           <div class="field">
             <div class="field__header">
               <label for="sqlInput">SQL bruto</label>
@@ -108,10 +177,11 @@
             </div>
             <textarea id="sqlOutput" class="text-input text-input--output" readonly></textarea>
           </div>
-        </div>
+        </article>
 
         <!-- Conteúdo XML -->
-        <div class="tab-content" id="xml-content" data-active="false">
+        <article class="tab-content" id="xml-content" data-active="false">
+          <h2 class="sr-only" id="formatador-xml">Formatador de XML Online</h2>
           <div class="field">
             <div class="field__header">
               <label for="xmlInput">XML bruto</label>
@@ -141,10 +211,11 @@
             </div>
             <textarea id="xmlOutput" class="text-input text-input--output" readonly></textarea>
           </div>
-        </div>
+        </article>
 
         <!-- Conteúdo JSON -->
-        <div class="tab-content" id="json-content" data-active="false">
+        <article class="tab-content" id="json-content" data-active="false">
+          <h2 class="sr-only" id="formatador-json">Formatador de JSON Online</h2>
           <div class="field">
             <div class="field__header">
               <label for="jsonInput">JSON bruto</label>
@@ -174,10 +245,11 @@
             </div>
             <textarea id="jsonOutput" class="text-input text-input--output" readonly></textarea>
           </div>
-        </div>
+        </article>
 
         <!-- Conteúdo Gerador de Senhas -->
-        <div class="tab-content" id="password-content" data-active="false">
+        <article class="tab-content" id="password-content" data-active="false">
+          <h2 class="sr-only" id="gerador-senhas">Gerador de Senhas Seguras</h2>
           <div class="password-generator">
             <div class="password-display">
               <div class="password-display__field">
@@ -225,10 +297,11 @@
               </div>
             </div>
           </div>
-        </div>
+        </article>
 
         <!-- Conteúdo Dados Fake -->
-        <div class="tab-content" id="fake-content" data-active="false">
+        <article class="tab-content" id="fake-content" data-active="false">
+          <h2 class="sr-only" id="dados-fake-brasil">Gerador de Dados Fake Brasil</h2>
           <div class="fake-generator">
             <div class="fake-generator__selector">
               <label class="style-picker">
@@ -365,10 +438,11 @@
 
             <div class="fake-results" id="fakeResults"></div>
           </div>
-        </div>
+        </article>
 
         <!-- Conteúdo QR Code -->
-        <div class="tab-content" id="qrcode-content" data-active="false">
+        <article class="tab-content" id="qrcode-content" data-active="false">
+          <h2 class="sr-only" id="gerador-qrcode">Gerador de QR Code Online</h2>
           <div class="qrcode-generator">
             <div class="field">
               <div class="field__header">
@@ -404,7 +478,7 @@
               </div>
             </div>
           </div>
-        </div>
+        </article>
       </section>
     </main>
 
