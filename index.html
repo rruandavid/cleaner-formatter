@@ -7,8 +7,8 @@
     <!-- Primary Meta Tags -->
     <title>Formatador SQL Online | Formatador JSON | Gerador de Senhas | Dev Tools Grátis</title>
     <meta name="title" content="Formatador SQL Online | Formatador JSON | Gerador de Senhas | Dev Tools Grátis" />
-    <meta name="description" content="Ferramentas essenciais para desenvolvedores: formatador SQL online, formatador JSON, formatador XML, gerador de senhas seguras, gerador de dados fake Brasil e gerador de QR Code. 100% gratuito e online." />
-    <meta name="keywords" content="formatador sql online, formatador json, formatador xml, gerador senha, dados fake brasil, qr code, dev tools, ferramentas desenvolvedor, formatador código online" />
+    <meta name="description" content="Ferramentas essenciais para desenvolvedores: formatador SQL online, formatador JSON, formatador XML, gerador de senhas seguras, gerador de dados fake Brasil, gerador de QR Code e gerador de UUID. 100% gratuito e online." />
+    <meta name="keywords" content="formatador sql online, formatador json, formatador xml, gerador senha, dados fake brasil, qr code, gerador uuid, uuid generator, dev tools, ferramentas desenvolvedor, formatador código online" />
     <meta name="author" content="DEV TOOLS" />
     <meta name="robots" content="index, follow" />
     <meta name="language" content="Portuguese" />
@@ -27,7 +27,7 @@
     <meta property="twitter:card" content="summary_large_image" />
     <meta property="twitter:url" content="https://rruandavid.github.io/dev-tools/" />
     <meta property="twitter:title" content="Formatador SQL Online | Formatador JSON | Gerador de Senhas" />
-    <meta property="twitter:description" content="Ferramentas essenciais para desenvolvedores: formatador SQL, JSON, XML, gerador de senhas, dados fake Brasil e QR Code. 100% gratuito." />
+    <meta property="twitter:description" content="Ferramentas essenciais para desenvolvedores: formatador SQL, JSON, XML, gerador de senhas, dados fake Brasil, QR Code e UUID. 100% gratuito." />
     <meta property="twitter:image" content="https://rruandavid.github.io/dev-tools/favicon.svg" />
     
     <!-- Canonical URL -->
@@ -45,7 +45,7 @@
       "@context": "https://schema.org",
       "@type": "WebApplication",
       "name": "DEV TOOLS - Ferramentas Essenciais para Desenvolvedores",
-      "description": "Formatador SQL online, formatador JSON, formatador XML, gerador de senhas seguras, gerador de dados fake Brasil e gerador de QR Code. Ferramentas gratuitas para desenvolvedores.",
+      "description": "Formatador SQL online, formatador JSON, formatador XML, gerador de senhas seguras, gerador de dados fake Brasil, gerador de QR Code e gerador de UUID. Ferramentas gratuitas para desenvolvedores.",
       "url": "https://rruandavid.github.io/dev-tools/",
       "applicationCategory": "DeveloperApplication",
       "operatingSystem": "Web Browser",
@@ -60,7 +60,8 @@
         "Formatador XML",
         "Gerador de Senhas Seguras",
         "Gerador de Dados Fake Brasil",
-        "Gerador de QR Code"
+        "Gerador de QR Code",
+        "Gerador de UUID"
       ],
       "browserRequirements": "Requires JavaScript. Requires HTML5.",
       "softwareVersion": "1.0",
@@ -122,6 +123,10 @@
         <button class="sidebar__tab" data-tab="qrcode" aria-selected="false">
           <span class="sidebar__tab-icon">📱</span>
           <span class="sidebar__tab-text">QR Code</span>
+        </button>
+        <button class="sidebar__tab" data-tab="uuid" aria-selected="false">
+          <span class="sidebar__tab-icon">🔑</span>
+          <span class="sidebar__tab-text">Gerador de UUID</span>
         </button>
       </nav>
     </aside>
@@ -482,6 +487,50 @@
               </div>
               <div class="qrcode-actions">
                 <button id="qrcodeDownloadBtn" class="button button--primary">Baixar QR Code</button>
+              </div>
+            </div>
+          </div>
+        </article>
+
+        <!-- Conteúdo Gerador de UUID -->
+        <article class="tab-content" id="uuid-content" data-active="false">
+          <h2 class="sr-only" id="gerador-uuid">Gerador de UUID</h2>
+          <div class="uuid-generator">
+            <div class="field">
+              <div class="field__header">
+                <label for="uuidOutput">UUID Gerado</label>
+                <span class="field__stats" id="uuidOutputStats">0 caracteres</span>
+              </div>
+              <input type="text" id="uuidOutput" class="text-input password-input" readonly />
+            </div>
+
+            <div class="controls">
+              <div class="controls__actions">
+                <button id="uuidGenerateBtn" class="button button--primary">Gerar UUID</button>
+                <button id="uuidCopyBtn" class="button button--ghost">Copiar</button>
+              </div>
+              <div class="controls__selectors">
+                <label class="style-picker">
+                  <span>Versão</span>
+                  <select id="uuidVersion" title="UUID v1: baseado em timestamp | UUID v4: aleatório | UUID v7: timestamp ordenável">
+                    <option value="v4" selected>UUID v4 (Aleatório)</option>
+                    <option value="v1">UUID v1 (Timestamp)</option>
+                    <option value="v7">UUID v7 (Timestamp Ordenável)</option>
+                  </select>
+                </label>
+              </div>
+            </div>
+
+            <div class="uuid-options">
+              <div class="password-checkboxes" style="grid-template-columns: repeat(2, 1fr); max-width: 400px;">
+                <label class="password-checkbox">
+                  <input type="checkbox" id="uuidWithHyphens" checked />
+                  <span>Com hífens</span>
+                </label>
+                <label class="password-checkbox">
+                  <input type="checkbox" id="uuidUppercase" />
+                  <span>Maiúsculas</span>
+                </label>
               </div>
             </div>
           </div>

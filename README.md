@@ -38,6 +38,8 @@ Este site está otimizado para SEO e indexação no Google com:
 
 - **📱 [Gerador de QR Code Online](https://rruandavid.github.io/dev-tools/#gerador-qrcode)** - Gere QR Codes online gratuitamente. Personalize cores (cor do QR Code e fundo), baixe em PNG. Suporta texto, URLs e qualquer conteúdo.
 
+- **🔑 [Gerador de UUID](https://rruandavid.github.io/dev-tools/#gerador-uuid)** - Gere identificadores únicos universais (UUID/GUID) nos formatos v1 (timestamp), v4 (aleatório) e v7 (timestamp ordenável). Suporte a múltiplos UUIDs, formatação com/sem hífens e case.
+
 ---
 
 ## ✨ Características
@@ -85,6 +87,7 @@ Este site está otimizado para SEO e indexação no Google com:
 - `/#gerador-senhas` - Gerador de Senhas
 - `/#dados-fake-brasil` - Gerador de Dados Fake Brasil
 - `/#gerador-qrcode` - Gerador de QR Code
+- `/#gerador-uuid` - Gerador de UUID
 
 ---
 

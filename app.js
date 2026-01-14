@@ -135,7 +135,8 @@ const switchTab = (targetTab) => {
     json: 'formatador-json',
     password: 'gerador-senhas',
     fake: 'dados-fake-brasil',
-    qrcode: 'gerador-qrcode'
+    qrcode: 'gerador-qrcode',
+    uuid: 'gerador-uuid'
   };
   
   const anchor = anchorMap[targetTab] || targetTab;
@@ -1690,5 +1691,184 @@ qrcodeInputEl.addEventListener("keydown", (e) => {
     generateQRCode();
   }
 });
+
+} // Fechar verificação de elementos
+
+// ============================================
+// GERADOR DE UUID
+// ============================================
+
+const uuidOutputEl = document.getElementById("uuidOutput");
+const uuidOutputStatsEl = document.getElementById("uuidOutputStats");
+const uuidGenerateBtn = document.getElementById("uuidGenerateBtn");
+const uuidCopyBtn = document.getElementById("uuidCopyBtn");
+const uuidVersionEl = document.getElementById("uuidVersion");
+const uuidWithHyphensEl = document.getElementById("uuidWithHyphens");
+const uuidUppercaseEl = document.getElementById("uuidUppercase");
+
+// Verificar se os elementos existem
+if (uuidOutputEl && uuidGenerateBtn && uuidCopyBtn) {
+
+// Função para gerar UUID v4 (aleatório) - usando crypto.randomUUID() nativo
+const generateUUIDv4 = () => {
+  if (typeof crypto !== "undefined" && crypto.randomUUID) {
+    return crypto.randomUUID();
+  }
+  // Fallback para navegadores antigos
+  return "xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx".replace(/[xy]/g, (c) => {
+    const r = (Math.random() * 16) | 0;
+    const v = c === "x" ? r : (r & 0x3) | 0x8;
+    return v.toString(16);
+  });
+};
+
+// Função para gerar UUID v1 (baseado em timestamp)
+const generateUUIDv1 = () => {
+  const now = Date.now();
+  const timestamp = Math.floor(now / 1000);
+  const nanoseconds = (now % 1000) * 10000;
+  
+  // Timestamp em 100-nanosecond intervals since 00:00:00.00, 14 October 1582
+  const uuidTime = timestamp * 10000 + nanoseconds + 0x01b21dd213814000;
+  
+  // Clock sequence (aleatório)
+  const clockSeq = Math.floor(Math.random() * 0x3fff);
+  
+  // Node ID (MAC address simulado - aleatório)
+  const node = Array.from({ length: 6 }, () => Math.floor(Math.random() * 256));
+  
+  // Montar UUID v1
+  const timeLow = (uuidTime & 0xffffffff).toString(16).padStart(8, "0");
+  const timeMid = ((uuidTime >>> 32) & 0xffff).toString(16).padStart(4, "0");
+  const timeHigh = ((uuidTime >>> 48) & 0x0fff).toString(16).padStart(4, "0");
+  const clockSeqHex = (clockSeq | 0x8000).toString(16).padStart(4, "0");
+  const nodeHex = node.map((b) => b.toString(16).padStart(2, "0")).join("");
+  
+  return `${timeLow}-${timeMid}-1${timeHigh}-${clockSeqHex}-${nodeHex}`;
+};
+
+// Função para gerar UUID v7 (timestamp ordenável)
+const generateUUIDv7 = () => {
+  const now = Date.now();
+  
+  // Timestamp em milissegundos (48 bits)
+  const timestamp = now;
+  
+  // Random part (12 bits + 62 bits)
+  const randomA = Math.floor(Math.random() * 0xfff);
+  const randomB = Math.floor(Math.random() * 0x3fffffffffffffff);
+  
+  // Montar UUID v7
+  const timeLow = (timestamp & 0xffffffff).toString(16).padStart(8, "0");
+  const timeMid = ((timestamp >>> 32) & 0xffff).toString(16).padStart(4, "0");
+  const randomAHex = (randomA | 0x7000).toString(16).padStart(4, "0");
+  const randomBHex = randomB.toString(16).padStart(12, "0");
+  
+  return `${timeLow}-${timeMid}-7${randomAHex.substring(1)}-${randomBHex.substring(0, 4)}-${randomBHex.substring(4)}`;
+};
+
+// Formatar UUID (aplicar hífens e case)
+const formatUUID = (uuid, withHyphens, uppercase) => {
+  // Primeiro, remover hífens para normalizar
+  let formatted = uuid.replace(/-/g, "");
+  
+  // Aplicar hífens se necessário
+  if (withHyphens && formatted.length === 32) {
+    formatted = `${formatted.substring(0, 8)}-${formatted.substring(8, 12)}-${formatted.substring(12, 16)}-${formatted.substring(16, 20)}-${formatted.substring(20)}`;
+  }
+  
+  // Aplicar case
+  if (uppercase) {
+    formatted = formatted.toUpperCase();
+  } else {
+    formatted = formatted.toLowerCase();
+  }
+  
+  return formatted;
+};
+
+// Gerar UUID baseado na versão selecionada
+const generateUUID = () => {
+  const version = uuidVersionEl.value;
+  let uuid;
+  
+  switch (version) {
+    case "v1":
+      uuid = generateUUIDv1();
+      break;
+    case "v4":
+      uuid = generateUUIDv4();
+      break;
+    case "v7":
+      uuid = generateUUIDv7();
+      break;
+    default:
+      uuid = generateUUIDv4();
+  }
+  
+  const withHyphens = uuidWithHyphensEl.checked;
+  const uppercase = uuidUppercaseEl.checked;
+  
+  return formatUUID(uuid, withHyphens, uppercase);
+};
+
+// Atualizar estatísticas
+const updateUUIDStats = () => {
+  const uuid = uuidOutputEl.value;
+  const chars = uuid.length;
+  uuidOutputStatsEl.textContent = `${chars} caracteres`;
+};
+
+// Gerar e exibir UUID
+const generateAndDisplayUUID = () => {
+  const uuid = generateUUID();
+  uuidOutputEl.value = uuid;
+  updateUUIDStats();
+};
+
+// Copiar UUID único
+uuidCopyBtn.addEventListener("click", async () => {
+  const uuid = uuidOutputEl.value;
+  if (!uuid) {
+    showToast("Gere um UUID primeiro", "info");
+    return;
+  }
+  try {
+    await navigator.clipboard.writeText(uuid);
+    showToast("UUID copiado com sucesso!", "success");
+  } catch (e) {
+    console.error("Erro ao copiar:", e);
+    showToast("Erro ao copiar", "error");
+  }
+});
+
+// Gerar UUID
+uuidGenerateBtn.addEventListener("click", generateAndDisplayUUID);
+
+// Aplicar formatação quando opções mudarem
+uuidWithHyphensEl.addEventListener("change", () => {
+  if (uuidOutputEl.value) {
+    const current = uuidOutputEl.value.replace(/-/g, "");
+    const withHyphens = uuidWithHyphensEl.checked;
+    const uppercase = uuidUppercaseEl.checked;
+    uuidOutputEl.value = formatUUID(current, withHyphens, uppercase);
+    updateUUIDStats();
+  }
+});
+
+uuidUppercaseEl.addEventListener("change", () => {
+  if (uuidOutputEl.value) {
+    const uppercase = uuidUppercaseEl.checked;
+    uuidOutputEl.value = uppercase ? uuidOutputEl.value.toUpperCase() : uuidOutputEl.value.toLowerCase();
+  }
+});
+
+// Quando versão mudar, regenerar
+uuidVersionEl.addEventListener("change", () => {
+  generateAndDisplayUUID();
+});
+
+// Gerar UUID inicial ao carregar
+generateAndDisplayUUID();
 
 } // Fechar verificação de elementos

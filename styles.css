@@ -1241,3 +1241,29 @@ body {
     flex-direction: column;
   }
 }
+
+/* Gerador de UUID */
+.uuid-generator {
+  display: flex;
+  flex-direction: column;
+  gap: 1.75rem;
+}
+
+.uuid-generator .password-input {
+  font-family: var(--font-mono);
+  font-size: 1rem;
+  text-align: center;
+  letter-spacing: 0.05em;
+}
+
+.uuid-options {
+  display: flex;
+  justify-content: flex-start;
+  padding: 1rem 0;
+}
+
+@media (max-width: 768px) {
+  .uuid-options .password-checkboxes {
+    grid-template-columns: 1fr;
+  }
+}
